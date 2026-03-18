@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Entertainment - Slide Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: 13.333in 7.5in;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0A;
+    --fg: #FAFAFA;
+    --muted: #1A1A1A;
+    --muted-fg: #737373;
+    --accent: #00c853;
+    --accent-dark: #00a844;
+    --gold: #ffd700;
+    --border: #262626;
+    --card: #0F0F0F;
+    --red: #ff5252;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #000;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+    background: var(--bg);
+    page-break-after: always;
+  }
+
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .slide-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: auto;
+  }
+
+  .slide-logo {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    opacity: 0.4;
+    text-transform: uppercase;
+  }
+
+  .slide-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted-fg);
+  }
+
+  .label-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .label-tag::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .hr { border: none; border-top: 1px solid var(--border); }
+
+  /* ============================
+     SLIDE 1: TITLE
+     ============================ */
+
+  .s1 .deco-text {
+    position: absolute;
+    bottom: -30px;
+    right: -20px;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 220px;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    color: var(--border);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .s1 .title-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .s1 h1 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    max-width: 800px;
+  }
+
+  .s1 h1 span { color: var(--accent); }
+
+  .s1 .subtitle {
+    font-size: 16px;
+    color: var(--muted-fg);
+    margin-top: 24px;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .s1 .accent-bar {
+    width: 64px;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 20px;
+  }
+
+  .s1 .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .s1 .bottom-bar .info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted-fg);
+    letter-spacing: 0.02em;
+  }
+
+  .s1 .badge-50 {
+    text-align: right;
+  }
+
+  .s1 .badge-50 .big {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .s1 .badge-50 .small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+  }
+
+  /* ============================
+     SLIDE 2: PROBLEM / SOLUTION
+     ============================ */
+
+  .s2 .two-col {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    align-items: center;
+  }
+
+  .s2 .col-divider {
+    width: 1px;
+    height: 80%;
+    background: var(--border);
+    align-self: center;
+  }
+
+  .s2 .col {
+    padding: 0 40px;
+  }
+
+  .s2 .col-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .s2 .col-label::before {
+    content: '';
+    width: 16px;
+    height: 2px;
+  }
+
+  .s2 .col-label.problem { color: var(--red); }
+  .s2 .col-label.problem::before { background: var(--red); }
+  .s2 .col-label.solution { color: var(--accent); }
+  .s2 .col-label.solution::before { background: var(--accent); }
+
+  .s2 h2 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+
+  .s2 .points {
+    list-style: none;
+  }
+
+  .s2 .points li {
+    font-size: 14px;
+    color: var(--muted-fg);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.5;
+  }
+
+  .s2 .points li .marker {
+    width: 3px;
+    height: 3px;
+    flex-shrink: 0;
+  }
+
+  .s2 .points li .marker.red { background: var(--red); }
+  .s2 .points li .marker.grn { background: var(--accent); }
+
+  /* ============================
+     SLIDE 3: STATS
+     ============================ */
+
+  .s3 .stats-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .s3 .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .s3 .stat-block {
+    background: var(--bg);
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .s3 .stat-block .num {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: var(--fg);
+    line-height: 1;
+  }
+
+  .s3 .stat-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted-fg);
+    margin-top: 10px;
+  }
+
+  .s3 .stat-block .accent-dot {
+    width: 24px;
+    height: 3px;
+    background: var(--accent);
+    margin: 12px auto 0;
+  }
+
+  /* ============================
+     SLIDE 4: SERVICES
+     ============================ */
+
+  .s4 .services-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .s4 .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .s4 .svc-card {
+    background: var(--bg);
+    padding: 32px 28px;
+  }
+
+  .s4 .svc-card .svc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .s4 .svc-card h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .s4 .svc-card p {
+    font-size: 13px;
+    color: var(--muted-fg);
+    line-height: 1.5;
+  }
+
+  /* ============================
+     SLIDE 5: PLATFORMS
+     ============================ */
+
+  .s5 .platforms-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .s5 .plat-heading {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 40px;
+  }
+
+  .s5 .plat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .s5 .plat-card {
+    padding: 40px 36px;
+    background: var(--bg);
+    position: relative;
+  }
+
+  .s5 .plat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 3px;
+  }
+
+  .s5 .plat-card.green::before { background: var(--accent); }
+  .s5 .plat-card.gold::before { background: var(--gold); }
+
+  .s5 .plat-card h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    margin-bottom: 12px;
+  }
+
+  .s5 .plat-card.green h3 { color: var(--accent); }
+  .s5 .plat-card.gold h3 { color: var(--gold); }
+
+  .s5 .plat-card p {
+    font-size: 14px;
+    color: var(--muted-fg);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .s5 .plat-card .plat-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--fg);
+    opacity: 0.35;
+  }
+
+  /* ============================
+     SLIDE 6: HOW IT WORKS
+     ============================ */
+
+  .s6 .process-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .s6 .proc-heading {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    margin-bottom: 40px;
+  }
+
+  .s6 .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .s6 .step {
+    background: var(--bg);
+    padding: 28px 24px;
+  }
+
+  .s6 .step-num {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    color: var(--border);
+    line-height: 1;
+  }
+
+  .s6 .step h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 8px 0 6px;
+  }
+
+  .s6 .step p {
+    font-size: 12px;
+    color: var(--muted-fg);
+    line-height: 1.5;
+  }
+
+  .s6 .step .step-bar {
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    margin-top: 12px;
+  }
+
+  /* ============================
+     SLIDE 7: TESTIMONIALS
+     ============================ */
+
+  .s7 .test-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .s7 .test-heading {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    margin-bottom: 36px;
+  }
+
+  .s7 .test-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .s7 .test-card {
+    background: var(--bg);
+    padding: 32px 28px;
+    position: relative;
+  }
+
+  .s7 .test-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .s7 .test-card .quote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted-fg);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .s7 .test-card .author {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .s7 .test-card .location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+
+  /* ============================
+     SLIDE 8: CTA
+     ============================ */
+
+  .s8 .deco-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 200px;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    color: var(--border);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  .s8 .cta-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .s8 .cta-layout h1 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+  }
+
+  .s8 .cta-layout h1 span { color: var(--accent); }
+
+  .s8 .cta-layout .sub {
+    font-size: 18px;
+    color: var(--muted-fg);
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .s8 .cta-phone {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .s8 .cta-underline {
+    width: 300px;
+    height: 3px;
+    background: var(--accent);
+    margin: 8px auto 0;
+  }
+
+  .s8 .cta-urls {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted-fg);
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .s8 .bottom-logos {
+    margin-top: 36px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .s8 .bottom-logos span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+  }
+
+  .s8 .bottom-logos .sep {
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+  }
+
+  @media screen {
+    .slide {
+      box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+    }
+  }
+
+  @media print {
+    body { background: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide { margin: 0; box-shadow: none; }
+    .noise { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide s1">
+  <div class="noise"></div>
+  <div class="deco-text">50/50</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">01 / 08</div>
+    </div>
+    <div class="title-block">
+      <div class="label-tag">Have Fun / Make Money</div>
+      <h1>Your Bar,<br>Our <span>Entertainment.</span></h1>
+      <p class="subtitle">Coin operated pool tables, jukeboxes, dart boards &amp; arcade games installed at your venue &mdash; zero upfront cost, full maintenance, 50/50 revenue split.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="bottom-bar">
+      <div class="info">autoentinc.com / pooltablesforbars.com / (714) 742-9271</div>
+      <div class="badge-50">
+        <span class="big">50/50</span>
+        <span class="small">Revenue Split</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Problem / Solution -->
+<div class="slide s2">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">02 / 08</div>
+    </div>
+    <div class="two-col">
+      <div class="col">
+        <div class="col-label problem">The Problem</div>
+        <h2>Bars Struggle to Keep Patrons</h2>
+        <ul class="points">
+          <li><span class="marker red"></span>Customers leave after one drink</li>
+          <li><span class="marker red"></span>No entertainment = no dwell time</li>
+          <li><span class="marker red"></span>Equipment is expensive to buy &amp; maintain</li>
+          <li><span class="marker red"></span>No expertise in coin-op management</li>
+        </ul>
+      </div>
+      <div class="col-divider"></div>
+      <div class="col">
+        <div class="col-label solution">Our Solution</div>
+        <h2>We Handle Everything</h2>
+        <ul class="points">
+          <li><span class="marker grn"></span>$0 upfront &mdash; we invest in the equipment</li>
+          <li><span class="marker grn"></span>Full installation &amp; ongoing maintenance</li>
+          <li><span class="marker grn"></span>Regular collection &amp; transparent reporting</li>
+          <li><span class="marker grn"></span>25+ years of coin-op expertise</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Stats -->
+<div class="slide s3">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">03 / 08</div>
+    </div>
+    <div class="stats-center">
+      <div class="label-tag" style="margin-bottom: 36px;">By The Numbers</div>
+      <div class="stats-grid">
+        <div class="stat-block">
+          <div class="num">60+</div>
+          <div class="label">Active Locations</div>
+          <div class="accent-dot"></div>
+        </div>
+        <div class="stat-block">
+          <div class="num">100+</div>
+          <div class="label">Tables Installed</div>
+          <div class="accent-dot"></div>
+        </div>
+        <div class="stat-block">
+          <div class="num">$400K+</div>
+          <div class="label">Revenue Split</div>
+          <div class="accent-dot"></div>
+        </div>
+        <div class="stat-block">
+          <div class="num">25+</div>
+          <div class="label">Years in Business</div>
+          <div class="accent-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Services -->
+<div class="slide s4">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">04 / 08</div>
+    </div>
+    <div class="services-layout">
+      <div class="label-tag" style="margin-bottom: 28px;">What We Offer</div>
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <h3>Pool Tables</h3>
+          <p>Diamond, Brunswick &amp; Valley coin-op tables. Smart cue ball, tap-to-pay, programmable pricing.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <h3>App Jukeboxes</h3>
+          <p>TouchTunes jukeboxes controlled from patrons' phones. Music drives atmosphere &amp; spending.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <h3>Arcade Games</h3>
+          <p>Classic &amp; modern arcade cabinets. From Ms. Pac-Man to Mario Kart &mdash; attract every crowd.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <h3>Dart Boards</h3>
+          <p>Electronic dart machines with league capability. Social, competitive, &amp; profitable.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">05</div>
+          <h3>Digital Signage</h3>
+          <p>Dynamic displays for promotions, events &amp; your brand. Part of the AETV network.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">06</div>
+          <h3>Digital Marketing</h3>
+          <p>We help grow your venue's reach with targeted digital marketing campaigns.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Platforms -->
+<div class="slide s5">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">05 / 08</div>
+    </div>
+    <div class="platforms-layout">
+      <div class="label-tag">Our Platforms</div>
+      <div class="plat-heading">Powered by Technology</div>
+      <div class="plat-row">
+        <div class="plat-card green">
+          <h3>Pool Tables for Bars</h3>
+          <p>Our dedicated platform for bar owners. Browse table models, request installation, track revenue, and manage your pool table partnership &mdash; all in one place.</p>
+          <div class="plat-url">pooltablesforbars.com</div>
+        </div>
+        <div class="plat-card gold">
+          <h3>Pool Hall Master</h3>
+          <p>The complete pool hall management system. Run leagues, host tournaments, track tables, manage player stats &amp; rankings &mdash; built for serious pool venues.</p>
+          <div class="plat-url">poolhallmaster.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: How It Works -->
+<div class="slide s6">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">06 / 08</div>
+    </div>
+    <div class="process-layout">
+      <div class="label-tag">The Process</div>
+      <div class="proc-heading">How It Works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Kick-Off Meeting</h3>
+          <p>Fill out our form or give us a call. Tell us about your bar and what you need.</p>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Location Audit</h3>
+          <p>We visit your venue to assess space, foot traffic, and determine the best equipment mix.</p>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Install &amp; Play</h3>
+          <p>Equipment installed in one day. Ready for patrons the same day. Zero disruption.</p>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Collect &amp; Upkeep</h3>
+          <p>We handle all collections, maintenance, and reporting. You collect your 50% split.</p>
+          <div class="step-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Testimonials -->
+<div class="slide s7">
+  <div class="noise"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">07 / 08</div>
+    </div>
+    <div class="test-layout">
+      <div class="label-tag">What Our Partners Say</div>
+      <div class="test-heading">Trusted Partnerships</div>
+      <div class="test-grid">
+        <div class="test-card">
+          <p class="quote">"We sold Muldoons to Automated Entertainment after they had been our coin-op partner for over 5 years. There's nothing like a relationship of someone who understands the business model."</p>
+          <div class="author">Muldoon's Irish Pub</div>
+          <div class="location">Long Beach, CA</div>
+        </div>
+        <div class="test-card">
+          <p class="quote">"We sold Lakewood Family Billiards to John of Automated Entertainment after he was our Jukebox operator for over 9 years. Best experience ever, I know the establishment is in good hands."</p>
+          <div class="author">Scott Rhor</div>
+          <div class="location">Lakewood, CA</div>
+        </div>
+        <div class="test-card">
+          <p class="quote">"Automated Entertainment has made my establishment a place for patrons to enjoy and hang out every day of the week. We see them every other week, and if we have issues they show up day of!"</p>
+          <div class="author">Jessie Bola</div>
+          <div class="location">Los Feliz, CA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: CTA -->
+<div class="slide s8">
+  <div class="noise"></div>
+  <div class="deco-text">PARTNER UP</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="slide-logo">Automated Entertainment</div>
+      <div class="slide-num">08 / 08</div>
+    </div>
+    <div class="cta-layout">
+      <h1>Let's <span>Partner</span> Up.</h1>
+      <p class="sub">No upfront cost. 90-day trial. Full maintenance included.</p>
+      <div class="cta-phone">(714) 742-9271</div>
+      <div class="cta-underline"></div>
+      <div class="cta-urls">autoentinc.com / pooltablesforbars.com</div>
+      <div class="bottom-logos">
+        <span>Pool Tables for Bars</span>
+        <div class="sep"></div>
+        <span>Pool Hall Master</span>
+        <div class="sep"></div>
+        <span>Automated Entertainment</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

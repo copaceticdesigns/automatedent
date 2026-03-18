@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Automated Entertainment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0A;
+    --fg: #FAFAFA;
+    --muted: #1A1A1A;
+    --muted-fg: #737373;
+    --accent: #00c853;
+    --accent-dark: #00a844;
+    --gold: #ffd700;
+    --border: #262626;
+    --card: #111111;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    padding: 56px 0 40px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-deco {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 120px;
+    letter-spacing: -0.06em;
+    color: var(--border);
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero .logo-mark {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero .logo-mark h1 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .hero .logo-mark h1 span { color: var(--accent); }
+
+  .hero .tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .hero .tagline::before,
+  .hero .tagline::after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero .sub {
+    font-size: 14px;
+    color: var(--muted-fg);
+    margin-top: 16px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* --- STATS ROW --- */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 20px 8px;
+    text-align: center;
+  }
+
+  .stat .num {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    margin-top: 4px;
+  }
+
+  /* --- SECTION LABELS --- */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 16px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* --- CONTACT ACTIONS --- */
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+  }
+
+  .contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg);
+    color: var(--fg);
+    text-decoration: none;
+    transition: background 150ms;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .contact-btn:active {
+    background: var(--muted);
+  }
+
+  .contact-btn .icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .contact-btn .icon.accent-bg {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .contact-btn .text .primary {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-btn .text .secondary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    margin-top: 2px;
+  }
+
+  /* --- PLATFORMS --- */
+  .platforms {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+  }
+
+  .platform-link {
+    display: block;
+    padding: 24px;
+    background: var(--bg);
+    text-decoration: none;
+    color: var(--fg);
+    position: relative;
+    transition: background 150ms;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .platform-link:active { background: var(--muted); }
+
+  .platform-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .platform-link.ptfb::before { background: var(--accent); }
+  .platform-link.phm::before { background: var(--gold); }
+  .platform-link.ae::before { background: var(--fg); }
+
+  .platform-link h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+
+  .platform-link p {
+    font-size: 13px;
+    color: var(--muted-fg);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .platform-link .url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .platform-link .arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-fg);
+    font-size: 18px;
+  }
+
+  /* --- MATERIALS --- */
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+  }
+
+  .material-card {
+    display: block;
+    padding: 24px 20px;
+    background: var(--bg);
+    text-decoration: none;
+    color: var(--fg);
+    transition: background 150ms;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  .material-card:active { background: var(--muted); }
+
+  .material-card .mat-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+    line-height: 1;
+  }
+
+  .material-card h4 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .material-card .mat-desc {
+    font-size: 11px;
+    color: var(--muted-fg);
+    line-height: 1.4;
+  }
+
+  .material-card .mat-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    border: 1px solid var(--border);
+    padding: 3px 6px;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  /* --- SERVICES LIST --- */
+  .services-compact {
+    margin-bottom: 32px;
+  }
+
+  .svc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .svc-item:first-child { border-top: 1px solid var(--border); }
+
+  .svc-item .svc-num {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--border);
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .svc-item h4 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .svc-item p {
+    font-size: 12px;
+    color: var(--muted-fg);
+    line-height: 1.4;
+  }
+
+  /* --- SAVE CONTACT --- */
+  .save-contact {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 150ms;
+    text-decoration: none;
+    margin-bottom: 32px;
+  }
+
+  .save-contact:active { background: var(--accent-dark); }
+
+  /* --- ADDRESS --- */
+  .address-block {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .address-block .addr {
+    font-size: 13px;
+    color: var(--muted-fg);
+    line-height: 1.6;
+  }
+
+  .address-block .copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--border);
+    margin-top: 12px;
+  }
+
+  /* --- SHARE BAR --- */
+  .share-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: env(safe-area-inset-bottom) 0 0;
+  }
+
+  .share-bar a,
+  .share-bar button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 8px;
+    background: none;
+    border: none;
+    color: var(--muted-fg);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 150ms;
+  }
+
+  .share-bar a:active,
+  .share-bar button:active { color: var(--accent); }
+
+  .share-bar .bar-icon { font-size: 20px; }
+
+  @media (min-width: 768px) {
+    .container { padding: 0 40px 100px; }
+    .hero { padding: 72px 0 48px; }
+    .hero-deco { font-size: 160px; }
+    .hero .logo-mark h1 { font-size: 40px; }
+    .materials-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-deco">AE</div>
+    <div class="logo-mark">
+      <h1>Automated<br><span>Entertainment</span></h1>
+    </div>
+    <div class="tagline">Have Fun / Make Money</div>
+    <p class="sub">Coin-operated entertainment for bars, restaurants &amp; venues. Pool tables, jukeboxes, darts &amp; more &mdash; zero upfront cost, full service, 50/50 revenue split.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat"><div class="num">60+</div><div class="lbl">Locations</div></div>
+    <div class="stat"><div class="num">100+</div><div class="lbl">Tables</div></div>
+    <div class="stat"><div class="num">$0</div><div class="lbl">Upfront</div></div>
+    <div class="stat"><div class="num">25+</div><div class="lbl">Years</div></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-label">Get In Touch</div>
+  <div class="contact-actions">
+    <a href="tel:+17147429271" class="contact-btn">
+      <div class="icon accent-bg">&#9742;</div>
+      <div class="text">
+        <div class="primary">(714) 742-9271</div>
+        <div class="secondary">Tap to Call</div>
+      </div>
+    </a>
+    <a href="sms:+17147429271" class="contact-btn">
+      <div class="icon">&#9993;</div>
+      <div class="text">
+        <div class="primary">Send a Text</div>
+        <div class="secondary">(714) 742-9271</div>
+      </div>
+    </a>
+    <a href="mailto:info@autoentinc.com" class="contact-btn">
+      <div class="icon">@</div>
+      <div class="text">
+        <div class="primary">info@autoentinc.com</div>
+        <div class="secondary">Email Us</div>
+      </div>
+    </a>
+    <a href="https://maps.apple.com/?address=13261+Standbridge+Ave,+Downey,+CA+90242" class="contact-btn">
+      <div class="icon">&#9872;</div>
+      <div class="text">
+        <div class="primary">13261 Standbridge Ave</div>
+        <div class="secondary">Downey, CA 90242</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- PLATFORMS -->
+  <div class="section-label">Our Platforms</div>
+  <div class="platforms">
+    <a href="https://pooltablesforbars.com" target="_blank" class="platform-link ptfb">
+      <h3>Pool Tables for Bars</h3>
+      <p>Get pool tables installed at your bar &mdash; $0 upfront, full maintenance, 50/50 split.</p>
+      <span class="url">pooltablesforbars.com</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+    <a href="https://poolhallmaster.com" target="_blank" class="platform-link phm">
+      <h3>Pool Hall Master</h3>
+      <p>Complete pool hall management &mdash; leagues, tournaments, table tracking &amp; player stats.</p>
+      <span class="url">poolhallmaster.com</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+    <a href="https://autoentinc.com" target="_blank" class="platform-link ae">
+      <h3>Automated Entertainment</h3>
+      <p>Full-service coin-operated entertainment for bars, restaurants &amp; venues since 2001.</p>
+      <span class="url">autoentinc.com</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+
+  <!-- MATERIALS -->
+  <div class="section-label">Sales Materials</div>
+  <div class="materials-grid">
+    <a href="presentation.html" class="material-card">
+      <span class="mat-icon">&#9654;</span>
+      <h4>Presentation</h4>
+      <p class="mat-desc">Interactive slide deck with products &amp; services</p>
+      <span class="mat-type">Slide Deck</span>
+    </a>
+    <a href="flyer.html" class="material-card">
+      <span class="mat-icon">&#9638;</span>
+      <h4>Flyer</h4>
+      <p class="mat-desc">One-page overview of everything we offer</p>
+      <span class="mat-type">8.5 x 11</span>
+    </a>
+    <a href="slides.html" class="material-card">
+      <span class="mat-icon">&#9641;</span>
+      <h4>Slides</h4>
+      <p class="mat-desc">Detailed multi-slide breakdown</p>
+      <span class="mat-type">Slides</span>
+    </a>
+    <a href="trifold-front.html" class="material-card">
+      <span class="mat-icon">&#9645;</span>
+      <h4>Trifold Front</h4>
+      <p class="mat-desc">Brochure outside panels</p>
+      <span class="mat-type">Trifold</span>
+    </a>
+    <a href="trifold-back.html" class="material-card">
+      <span class="mat-icon">&#9644;</span>
+      <h4>Trifold Back</h4>
+      <p class="mat-desc">Brochure inside panels</p>
+      <span class="mat-type">Trifold</span>
+    </a>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="section-label">What We Provide</div>
+  <div class="services-compact">
+    <div class="svc-item">
+      <div class="svc-num">01</div>
+      <div><h4>Pool Tables</h4><p>Coin-op tables from Diamond, Brunswick, Valley &amp; more</p></div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">02</div>
+      <div><h4>TouchTunes Jukeboxes</h4><p>App-controlled digital jukeboxes for every venue</p></div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">03</div>
+      <div><h4>Bullshooter Darts</h4><p>Electronic dart boards, league-ready &amp; coin-operated</p></div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">04</div>
+      <div><h4>Digital Signage / AETV</h4><p>In-venue screens for promotions, events &amp; branding</p></div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">05</div>
+      <div><h4>Marketing Services</h4><p>Social media, event promotion &amp; venue consulting</p></div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">06</div>
+      <div><h4>Full Maintenance</h4><p>Installation, servicing, collection &amp; reporting included</p></div>
+    </div>
+  </div>
+
+  <!-- SAVE CONTACT -->
+  <button class="save-contact" id="save-vcard">Save Contact to Phone</button>
+
+  <!-- ADDRESS -->
+  <div class="address-block">
+    <div class="addr">13261 Standbridge Ave<br>Downey, CA 90242</div>
+    <div class="copy">&copy; 2026 Automated Entertainment</div>
+  </div>
+
+</div>
+
+<!-- SHARE BAR -->
+<div class="share-bar">
+  <a href="tel:+17147429271">
+    <span class="bar-icon">&#9742;</span>
+    Call
+  </a>
+  <a href="sms:+17147429271">
+    <span class="bar-icon">&#9993;</span>
+    Text
+  </a>
+  <a href="mailto:info@autoentinc.com">
+    <span class="bar-icon">@</span>
+    Email
+  </a>
+  <button id="share-btn">
+    <span class="bar-icon">&#8682;</span>
+    Share
+  </button>
+</div>
+
+<script>
+(function() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Automated Entertainment',
+    'ORG:Automated Entertainment',
+    'TEL;TYPE=WORK,VOICE:(714) 742-9271',
+    'EMAIL:info@autoentinc.com',
+    'ADR;TYPE=WORK:;;13261 Standbridge Ave;Downey;CA;90242;USA',
+    'URL:https://autoentinc.com',
+    'URL:https://pooltablesforbars.com',
+    'URL:https://poolhallmaster.com',
+    'NOTE:Coin-operated entertainment for bars. Pool tables\\, jukeboxes\\, darts & more. $0 upfront\\, 50/50 revenue split.',
+    'END:VCARD'
+  ].join('\n');
+
+  document.getElementById('save-vcard').addEventListener('click', function() {
+    var blob = new Blob([vcard], { type: 'text/vcard' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Automated-Entertainment.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('share-btn').addEventListener('click', function() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Automated Entertainment',
+        text: 'Coin-operated entertainment for bars. Pool tables, jukeboxes, darts & more. $0 upfront, 50/50 revenue split.',
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        var btn = document.getElementById('share-btn');
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<span class="bar-icon">&#10003;</span>Copied';
+        setTimeout(function() { btn.innerHTML = orig; }, 2000);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

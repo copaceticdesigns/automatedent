@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Entertainment - Flyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0A;
+    --fg: #FAFAFA;
+    --muted: #1A1A1A;
+    --muted-fg: #737373;
+    --accent: #00c853;
+    --accent-dark: #00a844;
+    --gold: #ffd700;
+    --border: #262626;
+    --card: #0F0F0F;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #111;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .flyer {
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border);
+  }
+
+  /* --- TOP BAR --- */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.3in 0.45in 0.18in;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-text {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--fg);
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    margin-top: 4px;
+  }
+
+  .contact-strip {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: var(--muted-fg);
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-strip strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    padding: 0.22in 0.45in 0.15in;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-deco {
+    position: absolute;
+    top: -0.15in;
+    right: 0.45in;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 140px;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    color: var(--border);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tagline::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .hero h1 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    max-width: 5.5in;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 11.5px;
+    color: var(--muted-fg);
+    line-height: 1.55;
+    max-width: 5in;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-accent-bar {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 10px;
+  }
+
+  /* --- 50/50 BADGE --- */
+  .badge-50 {
+    position: absolute;
+    top: 0.95in;
+    right: 0.45in;
+    z-index: 3;
+    text-align: right;
+  }
+
+  .badge-50 .big {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .badge-50 .small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted-fg);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* --- STATS --- */
+  .stats-row {
+    display: flex;
+    padding: 0 0.45in;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-card {
+    flex: 1;
+    padding: 12px 0;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-card:last-child {
+    border-right: none;
+  }
+
+  .stat-num {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted-fg);
+    margin-top: 3px;
+  }
+
+  /* --- SERVICES --- */
+  .services-section {
+    padding: 0.18in 0.45in;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 2px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 14px 14px;
+  }
+
+  .service-card h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3px;
+  }
+
+  .service-card p {
+    font-size: 8.5px;
+    color: var(--muted-fg);
+    line-height: 1.45;
+  }
+
+  .service-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* --- PLATFORMS --- */
+  .platforms-section {
+    padding: 0.12in 0.45in 0.12in;
+    position: relative;
+    z-index: 2;
+  }
+
+  .platforms-row {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .platform-card {
+    flex: 1;
+    padding: 14px 16px;
+    background: var(--bg);
+    position: relative;
+  }
+
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+  }
+
+  .platform-card.ptfb::before { background: var(--accent); }
+  .platform-card.phm::before { background: var(--gold); }
+
+  .platform-info h3 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 3px;
+  }
+
+  .platform-card.ptfb .platform-info h3 { color: var(--accent); }
+  .platform-card.phm .platform-info h3 { color: var(--gold); }
+
+  .platform-info p {
+    font-size: 8.5px;
+    color: var(--muted-fg);
+    line-height: 1.45;
+  }
+
+  .platform-info .url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.05em;
+    color: var(--fg);
+    opacity: 0.4;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* --- CTA --- */
+  .cta-section {
+    padding: 0.15in 0.45in;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .cta-inner h2 {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    color: var(--fg);
+  }
+
+  .cta-inner h2 span { color: var(--accent); }
+
+  .cta-inner p {
+    font-size: 10px;
+    color: var(--muted-fg);
+    margin-top: 4px;
+  }
+
+  .cta-contact {
+    text-align: right;
+  }
+
+  .cta-contact .phone {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .cta-contact .phone-underline {
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 3px;
+  }
+
+  .cta-contact .web {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: var(--muted-fg);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  /* --- FOOTER --- */
+  .footer-strip {
+    padding: 0.08in 0.45in;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-strip span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5px;
+    color: var(--muted-fg);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media print {
+    body {
+      width: 8.5in;
+      height: 11in;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .noise { display: none; }
+    .flyer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="flyer">
+
+  <div class="top-bar">
+    <div>
+      <div class="logo-text">Automated Entertainment</div>
+      <div class="logo-sub">Have Fun / Make Money</div>
+    </div>
+    <div class="contact-strip">
+      <strong>autoentinc.com</strong><br>
+      (714) 742-9271<br>
+      collect@autoentinc.com
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-deco">50/50</div>
+    <div class="tagline">Coin-Op Partner for Bars &amp; Venues</div>
+    <h1>Your Bar.<br><span>Our Entertainment.</span></h1>
+    <p class="hero-desc">
+      Pool tables, jukeboxes, dart boards &amp; arcade games installed at your venue with
+      zero upfront cost. We handle installation, maintenance, and collection &mdash; you keep 50% of the revenue.
+    </p>
+    <div class="hero-accent-bar"></div>
+  </div>
+
+  <div class="badge-50">
+    <span class="big">50/50</span>
+    <span class="small">Revenue Split</span>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">60+</div>
+      <div class="stat-label">Locations</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Tables Installed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">Upfront Cost</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">25+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+  </div>
+
+  <div class="services-section">
+    <div class="section-label">Our Amenities</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-label">01</span>
+        <h3>Pool Tables</h3>
+        <p>Diamond, Brunswick &amp; Valley coin-op tables for every space.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-label">02</span>
+        <h3>App Jukeboxes</h3>
+        <p>TouchTunes jukeboxes that patrons control from their phones.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-label">03</span>
+        <h3>Arcade Games</h3>
+        <p>From Ms. Pac-Man to Mario Kart &mdash; attract a wider crowd.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-label">04</span>
+        <h3>Dart Boards</h3>
+        <p>Electronic dart machines that keep guests playing longer.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-label">05</span>
+        <h3>Digital Signage</h3>
+        <p>Dynamic displays for promotions, events &amp; branding.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-label">06</span>
+        <h3>Marketing</h3>
+        <p>Digital marketing services to grow your venue's reach.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="platforms-section">
+    <div class="section-label">Our Platforms</div>
+    <div class="platforms-row">
+      <div class="platform-card ptfb">
+        <div class="platform-info">
+          <h3>Pool Tables for Bars</h3>
+          <p>Our dedicated platform for bar owners to get pool tables installed, managed &amp; serviced.</p>
+          <span class="url">pooltablesforbars.com</span>
+        </div>
+      </div>
+      <div class="platform-card phm">
+        <div class="platform-info">
+          <h3>Pool Hall Master</h3>
+          <p>Complete pool hall management &mdash; leagues, tournaments, table tracking &amp; player stats.</p>
+          <span class="url">poolhallmaster.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-inner">
+      <div>
+        <h2>Ready to<br><span>level up?</span></h2>
+        <p>No upfront cost. 90-day trial. Let's partner up.</p>
+      </div>
+      <div class="cta-contact">
+        <div class="phone">(714) 742-9271</div>
+        <div class="phone-underline"></div>
+        <div class="web">autoentinc.com / pooltablesforbars.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>&copy; 2026 Automated Entertainment</span>
+    <span>13261 Standbridge Ave, Downey, CA 90242</span>
+    <span>Have Fun / Make Money</span>
+  </div>
+</div>
+</body>
+</html>
