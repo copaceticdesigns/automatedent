@@ -123,6 +123,41 @@
     z-index: 1;
   }
 
+  /* --- OWNER CARD --- */
+  .owner-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 0 32px;
+  }
+
+  .owner-card .avatar {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--border);
+    object-fit: cover;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .owner-card .owner-name {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .owner-card .owner-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    margin-top: 4px;
+  }
+
   /* --- STATS ROW --- */
   .stats-row {
     display: grid;
@@ -393,6 +428,44 @@
     line-height: 1.4;
   }
 
+  /* --- VIEW PRESENTATION --- */
+  .view-presentation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    text-decoration: none;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 150ms, color 150ms;
+    margin-bottom: 32px;
+  }
+
+  .view-presentation:active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .view-presentation .play-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
   /* --- SAVE CONTACT --- */
   .save-contact {
     display: block;
@@ -503,12 +576,11 @@
     <p class="sub">Coin-operated entertainment for bars, restaurants &amp; venues. Pool tables, jukeboxes, darts &amp; more &mdash; zero upfront cost, full service, 50/50 revenue split.</p>
   </div>
 
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat"><div class="num">60+</div><div class="lbl">Locations</div></div>
-    <div class="stat"><div class="num">100+</div><div class="lbl">Tables</div></div>
-    <div class="stat"><div class="num">$0</div><div class="lbl">Upfront</div></div>
-    <div class="stat"><div class="num">25+</div><div class="lbl">Years</div></div>
+  <!-- OWNER -->
+  <div class="owner-card">
+    <img class="avatar" src="images/johnenglishautomatedentertainment.JPG" alt="John English">
+    <div class="owner-name">John English</div>
+    <div class="owner-title">Owner</div>
   </div>
 
   <!-- CONTACT -->
@@ -535,14 +607,21 @@
         <div class="secondary">Email Us</div>
       </div>
     </a>
-    <a href="https://maps.apple.com/?address=13261+Standbridge+Ave,+Downey,+CA+90242" class="contact-btn">
-      <div class="icon">&#9872;</div>
-      <div class="text">
-        <div class="primary">13261 Standbridge Ave</div>
-        <div class="secondary">Downey, CA 90242</div>
-      </div>
-    </a>
   </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat"><div class="num">60+</div><div class="lbl">Locations</div></div>
+    <div class="stat"><div class="num">100+</div><div class="lbl">Tables</div></div>
+    <div class="stat"><div class="num">$0</div><div class="lbl">Upfront</div></div>
+    <div class="stat"><div class="num">25+</div><div class="lbl">Years</div></div>
+  </div>
+
+  <!-- VIEW PRESENTATION -->
+  <a href="presentation.html" class="view-presentation">
+    <div class="play-icon">&#9654;</div>
+    View Presentation
+  </a>
 
   <!-- PLATFORMS -->
   <div class="section-label">Our Platforms</div>
@@ -567,78 +646,8 @@
     </a>
   </div>
 
-  <!-- MATERIALS -->
-  <div class="section-label">Sales Materials</div>
-  <div class="materials-grid">
-    <a href="presentation.html" class="material-card">
-      <span class="mat-icon">&#9654;</span>
-      <h4>Presentation</h4>
-      <p class="mat-desc">Interactive slide deck with products &amp; services</p>
-      <span class="mat-type">Slide Deck</span>
-    </a>
-    <a href="flyer.html" class="material-card">
-      <span class="mat-icon">&#9638;</span>
-      <h4>Flyer</h4>
-      <p class="mat-desc">One-page overview of everything we offer</p>
-      <span class="mat-type">8.5 x 11</span>
-    </a>
-    <a href="slides.html" class="material-card">
-      <span class="mat-icon">&#9641;</span>
-      <h4>Slides</h4>
-      <p class="mat-desc">Detailed multi-slide breakdown</p>
-      <span class="mat-type">Slides</span>
-    </a>
-    <a href="trifold-front.html" class="material-card">
-      <span class="mat-icon">&#9645;</span>
-      <h4>Trifold Front</h4>
-      <p class="mat-desc">Brochure outside panels</p>
-      <span class="mat-type">Trifold</span>
-    </a>
-    <a href="trifold-back.html" class="material-card">
-      <span class="mat-icon">&#9644;</span>
-      <h4>Trifold Back</h4>
-      <p class="mat-desc">Brochure inside panels</p>
-      <span class="mat-type">Trifold</span>
-    </a>
-  </div>
-
-  <!-- SERVICES -->
-  <div class="section-label">What We Provide</div>
-  <div class="services-compact">
-    <div class="svc-item">
-      <div class="svc-num">01</div>
-      <div><h4>Pool Tables</h4><p>Coin-op tables from Diamond, Brunswick, Valley &amp; more</p></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-num">02</div>
-      <div><h4>TouchTunes Jukeboxes</h4><p>App-controlled digital jukeboxes for every venue</p></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-num">03</div>
-      <div><h4>Bullshooter Darts</h4><p>Electronic dart boards, league-ready &amp; coin-operated</p></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-num">04</div>
-      <div><h4>Digital Signage / AETV</h4><p>In-venue screens for promotions, events &amp; branding</p></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-num">05</div>
-      <div><h4>Marketing Services</h4><p>Social media, event promotion &amp; venue consulting</p></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-num">06</div>
-      <div><h4>Full Maintenance</h4><p>Installation, servicing, collection &amp; reporting included</p></div>
-    </div>
-  </div>
-
   <!-- SAVE CONTACT -->
   <button class="save-contact" id="save-vcard">Save Contact to Phone</button>
-
-  <!-- ADDRESS -->
-  <div class="address-block">
-    <div class="addr">13261 Standbridge Ave<br>Downey, CA 90242</div>
-    <div class="copy">&copy; 2026 Automated Entertainment</div>
-  </div>
 
 </div>
 
@@ -667,8 +676,10 @@
   var vcard = [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    'FN:Automated Entertainment',
+    'FN:John English',
+    'N:English;John;;;',
     'ORG:Automated Entertainment',
+    'TITLE:Owner',
     'TEL;TYPE=WORK,VOICE:(714) 742-9271',
     'EMAIL:info@autoentinc.com',
     'ADR;TYPE=WORK:;;13261 Standbridge Ave;Downey;CA;90242;USA',
