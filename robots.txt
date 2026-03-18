@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /slides.html
+Disallow: /flyer.html
+Disallow: /trifold-front.html
+Disallow: /trifold-back.html
+
+Sitemap: https://automatedent.netlify.app/sitemap.xml
